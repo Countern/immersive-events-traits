@@ -1,0 +1,355 @@
+namespace = iet_rtp_lowborn
+
+#################### Taking a Walk Chain ##############################
+# Taking a walk, Part 1
+narrative_event = {
+	id = iet_rtp_lowborn.1
+	title = "iet_rtp_lowborn_1_title"
+	desc = "iet_rtp_lowborn_1_desc"
+	picture = GFX_evt_countryside
+	is_triggered_only = yes
+	
+	only_capable = yes
+	prisoner = no
+	ai = no
+	in_command = no
+	
+	trigger = {
+		is_marriage_adult = yes
+		has_regent = no # could mean player is hiding, travelling, whatever the fuck he doing
+		in_seclusion = no
+		rtp_is_lower_baron = yes
+		NOR = {
+			has_job_title = job_commander
+			has_character_flag = do_not_disturb
+		}
+	}
+	
+	weight_multiplier = {
+		days = 1
+		modifier = {
+			factor = 0.1
+			OR = {
+				trait = severely_injured
+				trait = maimed
+				trait = one_legged
+				is_pregnant = yes
+			}
+		}
+		modifier = {
+			factor = 0.25
+			is_ill = yes
+		}
+		modifier = {
+			factor = 1.5
+			OR = {
+				trait = stressed
+				trait = depressed
+			}
+		}
+	}
+	option = { # I should keep walking
+		name = "iet_rtp_lowborn_1_1"
+		# Stress/Depression handler
+		random_list = {
+			70 = { }
+			10 = {
+				trigger = { trait = stressed }
+				remove_trait = stressed
+			}
+			10 = {
+				trigger = { trait = depressed }
+				remove_trait = depressed
+			}
+			10 = {
+				trigger = {
+					trait = depressed
+					trait = stressed
+				}
+				remove_trait = depressed
+				remove_trait = stressed
+			}
+		}
+		# Random event handler
+		hidden_tooltip = {
+			random_list = {
+				90 = { }
+				10 = { narrative_event = { id = iet_rtp_lowborn.2 } }
+			}
+		}
+	}
+	option = { # Nevermind lmao, back to court
+		name = "iet_rtp_lowborn_1_2"
+	}
+}
+
+# Taking a walk, Part 2: Stumbling into a person
+narrative_event = {
+	id = iet_rtp_lowborn.2
+	title = "iet_rtp_lowborn_2_title"
+	desc = "iet_rtp_lowborn_2_desc"
+	picture = GFX_evt_countryside
+	is_triggered_only = yes # Triggered by Event.1
+	immediate = {
+		if = {
+			limit = { is_female = no }
+			create_character = {
+				age = 20
+				female = yes
+				religion = location
+				culture = location
+				dynasty = none
+				random_traits = yes
+			}
+		}
+		else = {
+			create_character = {
+				age = 20
+				female = no
+				religion = location
+				culture = location
+				dynasty = none
+				random_traits = yes
+			}
+		}
+		new_character = { save_event_target_as = iet_encountered }
+	}
+	option = { # Sway that person
+		name = "iet_rtp_lowborn_2_1"
+		custom_tooltip = {
+			text = "iet_rtp_lowborn_2_1_tooltip"
+			random_list = {
+				50 = { # Success
+					mult_modifier = {
+						factor = 0
+						OR = {
+							trait = lunatic
+							trait = possessed
+						}
+					}
+					mult_modifier = {
+						factor = 0.1
+						OR = {
+							trait = ugly
+							trait = disfigured
+							trait = lunatic
+							trait = possessed
+						}
+					}
+					mult_modifier = {
+						factor = 0.2
+						diplomacy <= 4
+					}
+					mult_modifier = {
+						factor = 0.7
+						trait = shy
+					}
+					mult_modifier = {
+						factor = 1.25
+						diplomacy > 5
+						diplomacy <= 6
+					}
+					mult_modifier = {
+						factor = 1.3
+						event_target:iet_encountered = {
+							trait = lustful
+						}
+						trait = lustful
+					}
+					mult_modifier = {
+						factor = 1.3
+						diplomacy > 6
+						diplomacy <= 12
+					}
+					mult_modifier = {
+						factor = 1.3
+						trait = gregarious
+					}
+					mult_modifier = {
+						factor = 1.4
+						diplomacy >= 12
+					}
+					mult_modifier = {
+						factor = 1.8
+						OR = {
+							AND = {
+								is_female = yes
+								trait = fair
+							}
+							AND = {
+								is_female = yes
+								OR = {
+									trait = fair
+									trait = robust
+								}
+							}
+						}
+					}
+					set_character_flag = iet_success
+				}
+				50 = { # Failure
+					mult_modifier = {
+						factor = 0.1
+						OR = {
+							AND = {
+								is_female = yes
+								trait = fair
+							}
+							AND = {
+								is_female = no
+								OR = {
+									trait = fair
+									trait = robust
+								}
+							}
+						}
+					}
+					mult_modifier = {
+						factor = 0.2
+						OR = {
+							trait = seducer
+							trait = seductress
+							trait = hedonist
+						}
+					}
+					mult_modifier = {
+						factor = 0.25
+						diplomacy >= 6
+					}
+					mult_modifier = {
+						factor = 1.2
+						event_target:iet_encountered = {
+							trait = chaste
+						}
+						trait = chaste
+					}
+					mult_modifier = {
+						factor = 1.25
+						trait = shy
+					}
+					mult_modifier = {
+						factor = 1.4
+						diplomacy <= 4
+					}
+					mult_modifier = {
+						factor = 1.6
+						OR = {
+							trait = disfigured
+							trait = lunatic
+							trait = possessed
+						}
+					}
+					mult_modifier = {
+						factor = 1.75
+						trait = ugly
+					}
+					set_character_flag = iet_failure
+				}
+			}
+			narrative_event = { id = iet_rtp_lowborn.3 }
+		}
+	}
+	option = { # Not my type
+		name = "iet_rtp_lowborn_2_2"
+		hidden_tooltip = {
+			event_target:iet_encountered = {
+				death = { death_reason = death_vanished }
+			}
+		}
+	}
+}
+
+# Taking a walk, Part 3: Outcome
+narrative_event = {
+	id = iet_rtp_lowborn.3
+	title = "iet_rtp_lowborn_3_title"
+	desc = {
+		trigger = { has_character_flag = iet_success }
+		text = "iet_rtp_lowborn_3_desc_win"
+	}
+	desc = {
+		trigger = { has_character_flag = iet_failure }
+		text = "iet_rtp_lowborn_3_desc_fail"
+	}
+	picture = GFX_evt_countryside
+	is_triggered_only = yes # Triggered by Event.2
+	
+	after = {
+		clr_character_flag = iet_success
+		clr_character_flag = iet_failure
+	}
+	
+	option = { # Marry her/him
+		tooltip_info = diplomacy
+		trigger = {
+			has_character_flag = iet_success
+			is_married = no
+		}
+		name = "iet_rtp_lowborn_3_1"
+		add_lover = event_target:iet_encountered
+		if = {
+			limit = { is_female = no }
+			add_spouse = event_target:iet_encountered
+		}
+		else = {
+			add_spouse_matrilineal = event_target:iet_encountered
+		}
+		prestige = 100
+	}
+	option = { # Make her/him your lover
+		tooltip_info = diplomacy
+		trigger = { has_character_flag = iet_success }
+		name = "iet_rtp_lowborn_3_2"
+		add_lover = event_target:iet_encountered
+		event_target:iet_encountered = { banish = yes }
+	}
+	option = { # Not my type
+		tooltip_info = diplomacy
+		trigger = { has_character_flag = iet_success }
+		name = "iet_rtp_lowborn_3_5"
+		hidden_tooltip = {
+			event_target:iet_encountered = { death = { death_reason = death_vanished } }
+		}
+	}
+	option = { # Failed to sway her/him
+		trigger = { has_character_flag = iet_failure }
+		name = "iet_rtp_lowborn_3_3"
+		random_list = {
+			90 = {}
+			10 = { add_trait = depressed }
+		}
+		hidden_tooltip = {
+			event_target:iet_encountered = {
+				death = { death_reason = death_vanished }
+			}
+		}
+	}
+	option = { # Failed, but kill her/him anyway lol
+		tooltip_info = lunatic
+		trigger = {
+			has_character_flag = iet_failure
+			OR = {
+				trait = lunatic
+				trait = possessed
+			}
+		}
+		name = "iet_rtp_lowborn_3_4"
+		random_list = {
+			90 = {
+				event_target:iet_encountered = {
+					death = {
+						death_reason = death_murder_unknown
+						killer = ROOT
+					}
+				}
+			}
+			10 = {
+				custom_tooltip = {
+					text = "iet_rtp_lowborn_3_4_tooltip"
+					event_target:iet_encountered = { banish = yes }
+				}
+			}
+		}
+	}
+}
+#######################################################################

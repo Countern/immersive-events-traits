@@ -1,0 +1,8 @@
+on_yearly_pulse = {
+	random_events = {
+		iet_rtp = {
+			delay = 7
+			100 = iet_rtp_lowborn.1 # Taking a walk event chain
+		}
+	}
+}

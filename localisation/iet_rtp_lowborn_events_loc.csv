@@ -1,0 +1,26 @@
+# CODE;English;French;German;;Spanish;;;;;;;;;x
+# CODE;English;;;;;;;;;;;;;x
+
+# Taking a walk event chain
+### Part 1
+iet_rtp_lowborn_1_title;Stroll in the Countryside;;;;;;;;;x
+iet_rtp_lowborn_1_desc;I decided to take a walk around the countryside of [Root.PrimaryTitle.GetName] to take a break from work. As I walked I close my eyes and breath in the grassy smell and slow, calm winds and take in the calmness of the countryside. After a while, I noticed the sun has reached above me and that I have travelled a bit far. Should I continue with my stroll or return home?;;;;;;;;;;;;;x
+iet_rtp_lowborn_1_1;I should continue then return home.;;;;;;;;;;;;;x
+iet_rtp_lowborn_1_2;It is best I should return home.;;;;;;;;;;;;;x
+
+### Part 2
+iet_rtp_lowborn_2_title;Encounter with [iet_encountered.GetFirstName];;;;;;;;;;;;;x
+iet_rtp_lowborn_2_desc;I decided to continue walking to enjoy my break a little bit more. After a few hours, I noticed a [Root.GetManWomanOpp] on the same path as me walking towards my direction. After we got closer, [Root.GetSheHe] stopped and started a conversation with me until we talked for hours. After a while, I noticed the light turning to orange and realized that I should start my journey back home.;;;;;;;;;;;;;x
+iet_rtp_lowborn_2_1;I should get to know [iet_encountered.GetFirstName] more.;;;;;;;;;;;;;x
+iet_rtp_lowborn_2_1_tooltip;§GSuccess§! depends on how high your §MDiplomacy§! stat is along with certain vanilla traits that enhances your sex appeal.\n§RFailure§! depends on your low §MDiplomacy§! stat and certain vanilla traits that brings down your sex appeal.;;;;;;;;;;;;;x
+iet_rtp_lowborn_2_2;Best I start now else it will be too dark.;;;;;;;;;;;;;x
+
+### Part 3
+iet_rtp_lowborn_3_title;Swaying of [iet_encountered.GetFirstName];;;;;;;;;;;;;x
+iet_rtp_lowborn_3_desc_win;After what seems like tens of minutes and possibly hours, my words have managed to sway [iet_encountered.GetFirstName] as [Root.GetSheHeOpp] held my hand as we walk and talk. We walked and talked for hours before we decided to depart back to our home, but before that what must I do?;;;;;;;;;;;;;x
+iet_rtp_lowborn_3_desc_fail;After what seems like tens of minutes and possibly hours, my words did not managed to sway [iet_encountered.GetFirstName] as [Root.GetSheHeOpp] kept a respectful distance between me and [Root.GetHerHeOpp] as we walk and talk. A failure indeed.;;;;;;;;;;;;;x
+iet_rtp_lowborn_3_1;I'll marry [iet_encountered.GetFirstName];;;;;;;;;;;;;x
+iet_rtp_lowborn_3_2;I'll love [iet_encountered.GetFirstName];;;;;;;;;;;;;x
+iet_rtp_lowborn_3_3;At least I tried.;;;;;;;;;;;;;x
+iet_rtp_lowborn_3_4;I will kill her, dammit!;;;;;;;;;;;;;x
+iet_rtp_lowborn_3_4_tooltip;§M[iet_encountered.GetFirstName]§! escapes!;;;;;;;;;;;;;x
